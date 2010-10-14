@@ -15,10 +15,10 @@ blocklib.map
     
 blocklib.entity
     blocklib.entity.Entity
+    blocklib.entity.EntityModifier
     blocklib.entity.server
 		blocklib.entity.server.Character
 		blocklib.entity.server.NPC
-		blocklib.entity.server.Vehicle
     blocklib.entity.client
         blocklib.entity.client.Character
 
@@ -63,8 +63,6 @@ blocklib.entity.Entity
     int claimedByID //the uniqueid which currently has claim of this entity, more used for monster claim
     int targettingID //the uniqueid that this entity is targetting
     int textureID //the current texture
-    string name
-    boolean engageable //can this entity engage in combat
     Vector3F position
     Vector3F orientation
     Vector3F dimension
@@ -75,19 +73,18 @@ blocklib.entity.Entity
     int state //bitwise-or to store values
 
 blocklib.entity.server.Character extends Entity
+	string name
 	Item[] inventory
+	EntityModifier[] modifiers //essentially buffs and debuffs
 
 blocklib.entity.server.NPC extends Entity
 	Item[] inventory
 
-blocklib.entity.server.Transportation extends Entity
-	Vector3F[] waypoints
-
 blocklib.entity.Character extends Entity
     Item[] inventory
     
-    
-blocklib.entity.client.ClientEntity
+blocklib.entity.client.ClientEntity extends Entity
+    string name
     
 blocklib.entity.State
     int RESTING
@@ -96,5 +93,5 @@ blocklib.entity.State
     int FIGHTING
     int TRADING
     int HIT
-    
-
+    int CANFIGHT
+    int MERCHANT
