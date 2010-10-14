@@ -1,7 +1,8 @@
 /*
  * Copyright 2010 - James Likier
  */
-package blocklib;
+package blocklib.map;
+
 
 public class Chunk {
 	public int length;
