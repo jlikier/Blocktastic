@@ -3,11 +3,10 @@
  */
 package blocklib.map;
 
+import blocklib.common.*;
 
 public class Chunk {
-	public int length;
-	public int width;
-	public int height;
+	public Vector3F dimension;
 	
 	public Block[][][] blocks;
 }
