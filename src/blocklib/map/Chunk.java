@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 - James Likier
+ * Copyright 2010 - James Likier and Julian Hartline
  */
 package blocklib.map;
 

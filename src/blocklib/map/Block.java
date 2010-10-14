@@ -1,15 +1,21 @@
 /*
- * Copyright 2010 - James Likier
+ * Copyright 2010 - James Likier and Julian Hartline
  */
 package blocklib.map;
 
 import blocklib.common.*;
 
 public class Block implements IEntity{
+	public int entityID;
 	public int textureID;
 	public Vector3F position;
 	public Vector3F dimension;
 	public Vector3F velocity;
+	
+	public int getEntityID()
+	{
+		return entityID;
+	}
 	
 	public int getTextureID()
 	{
