@@ -1,0 +1,30 @@
+<project name="Blocktastic" basedir="." default="main">
+    <property name="main-class" value="blocktastic.client.Client"/>
+    <property name="src" value="src"/>
+    <property name="bin" value="bin"/>
+    <property name="lib" value="lib" />
+
+	<!-- begin lwjgl -->
+	<property name="lwjgl" value="${lib}/lwjgl-2.5"/>
+	<property name="lwjgl.jar" value="${lwjgl}/jar"/>
+	<property name="lwjgl.native" value="${lwjgl}/native/${os}"/>
+	<!-- end lwjgl -->
+	
+    <path id="classpath">
+    	<!-- begin lwjgl -->
+    	<fileset dir="${lwjgl.jar}" includes="*.jar"/>
+    	<!-- end lwjgl -->
+    </path>
+
+    <target name="clean">
+        <delete dir="${bin}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${bin}"/>
+		<javac srcdir="${src}" destdir="${bin}" classpathref="classpath"
+			debug="true" debuglevel="lines,vars,source" includeantruntime="false"/>
+    </target>
+
+    <target name="main" depends="clean,compile"/>
+</project>
