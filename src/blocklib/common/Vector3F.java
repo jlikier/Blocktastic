@@ -22,10 +22,10 @@ public class Vector3F {
 
 	public float getMagnitude()
 	{
-		return Math.cbrt(x*x + y*y + z*z);
+		return (float)Math.cbrt(x*x + y*y + z*z);
 	}
 
-	public Vector3F add(Vector 3F v)
+	public Vector3F add(Vector3F v)
 	{
 		return new Vector3F(x+v.x, y+v.y, z+v.z);
 	}
