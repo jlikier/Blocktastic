@@ -19,4 +19,25 @@ public class Vector3F {
 	{
 		return new Vector3F(x,y,z);
 	}
+
+	public float getMagnitude()
+	{
+		return Math.cbrt(x*x + y*y + z*z);
+	}
+
+	public Vector3F add(Vector 3F v)
+	{
+		return new Vector3F(x+v.x, y+v.y, z+v.z);
+	}
+
+	public Vector3F scale(float factor)
+	{
+		return new Vector3F(x*factor, y*factor, z*factor);
+	}
+
+	// Returns a unit vector in the same direction
+	public Vector3F getUnitVector()
+	{
+		return this.scale(1.0F / getMagnitude());
+	}
 }
