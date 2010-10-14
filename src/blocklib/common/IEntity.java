@@ -5,6 +5,9 @@ package blocklib.common;
 
 public interface IEntity {
 	
+	int gTextureID();
+	void sTextureID(int tid);
+	
 	Position gPosition();
 	void sPosition(Position p);
 	

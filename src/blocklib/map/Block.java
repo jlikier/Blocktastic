@@ -6,9 +6,19 @@ package blocklib.map;
 import blocklib.common.*;
 
 public class Block implements IEntity{
+	public int textureID;
 	public Position position;
 	public Dimension dimension;
 	public Movement movement;
+	
+	public int gTextureID()
+	{
+		return textureID;
+	}
+	public void sTextureID(int tid)
+	{
+		textureID = tid;
+	}
 	
 	public Position gPosition()
 	{
