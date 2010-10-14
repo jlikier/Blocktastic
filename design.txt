@@ -1,0 +1,100 @@
+=================================================
+blocklib
+=================================================
+blocklib.common
+    This is where misc and general classes can go.
+    blocklib.common.Vector3F
+
+blocklib.map
+    Anything related to the map can go in here.
+    blocklib.map.Map
+    blocklib.map.Chunk
+    blocklib.map.block
+        blocklib.map.Block
+        blocklib.map.BlockType
+    
+blocklib.entity
+    blocklib.entity.Entity
+    blocklib.entity.server
+		blocklib.entity.server.Character
+		blocklib.entity.server.NPC
+		blocklib.entity.server.Vehicle
+    blocklib.entity.client
+        blocklib.entity.client.Character
+
+network.packets
+network.client
+network.server
+
+graphics.*
+
+=================================================
+Blocktastic!
+=================================================
+blocktastic.client
+    The actual game client goes here.
+
+blocktastic.server
+    The actual game server goes here :)
+
+
+=================================================
+Class Sketches
+=================================================
+blocklib.map.block.Block
+    int typeID //which blocktype does this map to
+    Vector3F position
+    Vector3F dimension
+    Vector3F velocity
+    int durability //how many hits left before breaking
+    int lastHitSeconds //how many seconds ago was it hit
+    
+blocklib.map.block.BlockType
+    int typeID
+    boolean breakable
+    int maxDurability //how many hits does it take to break
+    int resetDurabilitySeconds //how many seconds does it take to reset durability
+    int textureID //which texture does this block map to
+    
+blocklib.entity.Entity
+    int entityID //which entity does this map to
+	int factionID //which faction does this entity belong to
+    int uniqueID //a specific entity identifier
+    int claimedByID //the uniqueid which currently has claim of this entity, more used for monster claim
+    int targettingID //the uniqueid that this entity is targetting
+    int textureID //the current texture
+    string name
+    boolean engageable //can this entity engage in combat
+    Vector3F position
+    Vector3F orientation
+    Vector3F dimension
+    Vector3F velocity
+    int health
+    int mana
+    int level
+    int state //bitwise-or to store values
+
+blocklib.entity.server.Character extends Entity
+	Item[] inventory
+
+blocklib.entity.server.NPC extends Entity
+	Item[] inventory
+
+blocklib.entity.server.Transportation extends Entity
+	Vector3F[] waypoints
+
+blocklib.entity.Character extends Entity
+    Item[] inventory
+    
+    
+blocklib.entity.client.ClientEntity
+    
+blocklib.entity.State
+    int RESTING
+    int MOVING
+    int STANDING
+    int FIGHTING
+    int TRADING
+    int HIT
+    
+
