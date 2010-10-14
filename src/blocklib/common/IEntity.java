@@ -8,14 +8,14 @@ public interface IEntity {
 	int getTextureID();
 	void setTextureID(int tid);
 	
-	Position getPosition();
-	void setPosition(Position p);
+	Vector3F getPosition();
+	void setPosition(Vector3F p);
 	
-	Dimension getDimension();
-	void setDimension(Dimension d);
+	Vector3F getDimension();
+	void setDimension(Vector3F d);
 	
-	Movement getMovement();
-	void setMovement(Movement m);
+	Vector3F getVelocity();
+	void setVelocity(Vector3F m);
 	
 	void Update();
 

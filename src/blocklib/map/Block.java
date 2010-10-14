@@ -7,9 +7,9 @@ import blocklib.common.*;
 
 public class Block implements IEntity{
 	public int textureID;
-	public Position position;
-	public Dimension dimension;
-	public Movement movement;
+	public Vector3F position;
+	public Vector3F dimension;
+	public Vector3F velocity;
 	
 	public int getTextureID()
 	{
@@ -20,31 +20,31 @@ public class Block implements IEntity{
 		textureID = tid;
 	}
 	
-	public Position getPosition()
+	public Vector3F getPosition()
 	{
 		return position;
 	}
-	public void setPosition(Position p)
+	public void setPosition(Vector3F p)
 	{
 		position = p;
 	}
 	
-	public Dimension getDimension()
+	public Vector3F getDimension()
 	{
 		return dimension;
 	}
-	public void setDimension(Dimension d)
+	public void setDimension(Vector3F d)
 	{
 		dimension = d;
 	}
 	
-	public Movement getMovement()
+	public Vector3F getVelocity()
 	{
-		return movement;
+		return velocity;
 	}
-	public void setMovement(Movement m)
+	public void setVelocity(Vector3F v)
 	{
-		movement = m;
+		velocity = v;
 	}
 	
 	public void Update()

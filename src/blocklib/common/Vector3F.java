@@ -1,9 +1,6 @@
-/*
- * Copyright 2010 - James Likier
- */
 package blocklib.common;
 
-public class Position {
+public class Vector3F {
 	public float x;
 	public float y;
 	public float z;
