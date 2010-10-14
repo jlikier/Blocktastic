@@ -11,38 +11,38 @@ public class Block implements IEntity{
 	public Dimension dimension;
 	public Movement movement;
 	
-	public int gTextureID()
+	public int getTextureID()
 	{
 		return textureID;
 	}
-	public void sTextureID(int tid)
+	public void setTextureID(int tid)
 	{
 		textureID = tid;
 	}
 	
-	public Position gPosition()
+	public Position getPosition()
 	{
 		return position;
 	}
-	public void sPosition(Position p)
+	public void setPosition(Position p)
 	{
 		position = p;
 	}
 	
-	public Dimension gDimension()
+	public Dimension getDimension()
 	{
 		return dimension;
 	}
-	public void sDimension(Dimension d)
+	public void setDimension(Dimension d)
 	{
 		dimension = d;
 	}
 	
-	public Movement gMovement()
+	public Movement getMovement()
 	{
 		return movement;
 	}
-	public void sMovement(Movement m)
+	public void setMovement(Movement m)
 	{
 		movement = m;
 	}

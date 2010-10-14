@@ -5,17 +5,17 @@ package blocklib.common;
 
 public interface IEntity {
 	
-	int gTextureID();
-	void sTextureID(int tid);
+	int getTextureID();
+	void setTextureID(int tid);
 	
-	Position gPosition();
-	void sPosition(Position p);
+	Position getPosition();
+	void setPosition(Position p);
 	
-	Dimension gDimension();
-	void sDimension(Dimension d);
+	Dimension getDimension();
+	void setDimension(Dimension d);
 	
-	Movement gMovement();
-	void sMovement(Movement m);
+	Movement getMovement();
+	void setMovement(Movement m);
 	
 	void Update();
 
