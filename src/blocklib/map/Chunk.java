@@ -7,17 +7,54 @@ import blocklib.common.*;
 import blocklib.map.block.*;
 
 public class Chunk {
-	public Vector3F chunkSize;
+	public Vector3I chunkSize;
 	public Block[][][] blocks;
 	
-	public Chunk(Vector3F chunkSize)
+	public Chunk(Vector3I chunkSize)
 	{
-		Vector3F d = chunkSize.clone();
-		int x = (int)d.x;
-		int y = (int)d.y;
-		int z = (int)d.z;
+		this.chunkSize = chunkSize.clone();
+		this.blocks = new Block[chunkSize.x][chunkSize.y][chunkSize.z];
+	}
+	
+	public Block getBlock(Vector3I v)
+	{
+		Block b = null;
 		
-		this.chunkSize = chunkSize;
-		this.blocks = new Block[x][y][z];
+		int x = chunkSize.x % v.x;
+		int y = chunkSize.y % v.y;
+		int z = chunkSize.z % v.z;
+		
+		if(validPosition(x,y,z))
+		{
+			b = blocks[x][y][z];
+		}
+		
+		return b;
+	}
+	public void setBlock(Vector3I v, Block b)
+	{
+		int x = chunkSize.x % v.x;
+		int y = chunkSize.y % v.y;
+		int z = chunkSize.z % v.z;
+		
+		if(validPosition(x,y,z))
+		{
+			blocks[x][y][z] = b;
+		}
+	}
+	
+	public boolean validPosition(Vector3I v)
+	{
+		return validPosition(v.x, v.y, v.z);
+	}
+	public boolean validPosition(int x, int y, int z)
+	{
+		if((x < 0 || x >= chunkSize.x)
+			|| (y < 0 || y >= chunkSize.y)
+			|| (z < 0 || z >= chunkSize.z))
+		{
+			return false;
+		}
+		return true;
 	}
 }
