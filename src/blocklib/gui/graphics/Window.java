@@ -149,15 +149,15 @@ public class Window {
 	
 
 	private void glInit() {
-		//glEnable(GL_LIGHTING); // commenting to resolve issue
+		glEnable(GL_LIGHTING); // commenting to resolve issue
 		//glEnable(GL_CULL_FACE); // commenting to resolve issue
 	    glEnable(GL_DEPTH_TEST);
 	    //glEnable(GL_COLOR); //commenting to resolve
 	    //glEnable(GL_DOUBLEBUFFER); // I read online that lwjgl defualts to double buffering
 	    
-	    //glEnable(GL_LIGHT0); // commenting to resolve issue
-	    //FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); // commenting to resolve issue
-	    //glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); // commenting to resolve issue
+	    glEnable(GL_LIGHT0); // commenting to resolve issue
+	    FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); // commenting to resolve issue
+	    glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); // commenting to resolve issue
 		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
