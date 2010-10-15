@@ -32,7 +32,12 @@ blocklib.network.client
 blocklib.network.server
 
 * The builtin graphics for opengl
-blocklib.graphics.*
+blocklib.gui.graphics
+    Window
+blocklib.gui.input
+    KeyboardHandler
+    KeyListener
+    KeyEvent
 
 =================================================
 Blocktastic!
