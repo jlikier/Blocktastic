@@ -12,6 +12,9 @@ public class Chunk {
 	
 	public Chunk(Vector3F chunkSize)
 	{
+		//TODO is there a reason that we're cloning this vector? there doesnt seem any reason not to use..
+		// this.blocks = new Block[chunkSize.x][chunkSize.y][chunkSize.z];
+		// instead of all of this
 		Vector3F d = chunkSize.clone();
 		int x = (int)d.x;
 		int y = (int)d.y;

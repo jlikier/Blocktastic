@@ -29,7 +29,7 @@ public class Block {
 		velocity = v;
 	}
 	
-	public void Update()
+	public void update()
 	{
 	}
 }

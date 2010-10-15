@@ -3,10 +3,44 @@
  */
 package blocktastic.client;
 
-public class Client {
+import blocklib.gui.graphics.Window;
+import blocklib.gui.input.KeyEvent;
+import blocklib.gui.input.KeyListener;
+
+public class Client implements KeyListener {
+	boolean run;
 
 	public static void main(String[] args) {
-		System.out.println("Success");
+		new Client();
+	}
+	
+	public Client() {
+		Window w = new Window();
+		w.kb.addKeyListener(this);
+		
+		run = true;
+		while(run) {
+			
+			w.render();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	@Override
+	public void keyPressed(KeyEvent k) {
+		if (k.getKey() == 1) { //ESC
+			run = false;
+		}
+		System.out.println(k.getKey());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent k) {
+		
+	}
 }
