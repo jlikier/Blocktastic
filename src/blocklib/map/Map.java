@@ -81,8 +81,8 @@ public class Map {
 	public boolean validPosition(int x, int y, int z)
 	{
 		if((x < 0 || x >= mapSize.x)
-			&& (y < 0 || y >= mapSize.y)
-			&& (z < 0 || z >= mapSize.z))
+			|| (y < 0 || y >= mapSize.y)
+			|| (z < 0 || z >= mapSize.z))
 		{
 			return false;
 		}
