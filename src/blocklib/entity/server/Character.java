@@ -9,6 +9,6 @@ public class Character extends Entity{
 	public String name;
 	public int baseHealth;
 	public int baseMana;
-	//public Inventory inventory;
+	public Inventory inventory;
 	//public List<EntityModifier> modifiers;
 }
