@@ -14,15 +14,15 @@ blocklib.map
         blocklib.map.BlockType
     
 * An entity is an object with behavior/functionality that exists in a map
-	* Example: players, monsters, town npcs, vehicles
+        * Example: players, monsters, town npcs, vehicles
 * Includes a modifier system, for things like buffs/debuffs
 * Gear will probably use the modifier system 
 blocklib.entity
     blocklib.entity.Entity
     blocklib.entity.EntityModifier
     blocklib.entity.server
-		blocklib.entity.server.Character
-		blocklib.entity.server.NPC
+        blocklib.entity.server.Character
+        blocklib.entity.server.NPC
     blocklib.entity.client
         blocklib.entity.client.Character
 
@@ -56,31 +56,51 @@ blocklib.map.block.BlockType
     Vector3F dimension
     boolean breakable
     int maxDurability //how many hits does it take to break
-    int resetDurabilitySeconds //how many seconds does it take to reset durability
+    //wouldn't you think that blocks should regenerate over time rather than hard reset, depending on the kind of block xD
+    //or damage is forever.. that might make more sense -- ah, i was just ingrained in my mind from mc xD really? the block begins to crumble and resets after a time period idk. ah
+    //they dont have durability in MC thought, they just reset when you stop attacking them.
+    its not based on time, it sbased on whether or not you're attacking it
+    each block is.. "if you attack it for X seconds, it breaks"
+    what if we make it where a block slowly regens durability per tick. would allow for large blocks to be brough down by a lot of people xD. kind of like for a mega boss finale
+    sounds good lol
+    boss appears and kicks your ass, then you gotta mine your way out to escape! but the boss comes back every 15sec, so you gotta get everyone to mine at the same time!
+    float regenRate;
     int textureID //which texture does this block map to
     float friction
     boolean collidable
     boolean transparent
     
 blocklib.map.Chunk
-	Vector3F chunkSize
-	Block[][][] blocks
-	
+    Vector3F chunkSize
+    Block[][][] blocks
+    //we can give each chunk a reference to neighboring chunks for faster lookup
+        
 blocklib.map.Map
-	Vector3F mapSize
-	Vector3F chunkSize
-	Chunk[][][] chunks
-	string name
+    Vector3F mapSize
+    Vector3F chunkSize //duplicate from chunkSize in blocklib.map.Chunk? //this is just the reference used to create each block, so you can make maps with different chunksizes, not 
+    //hardcoded.  
+    I dont think we want to support different chunk sizes within the same map, organizing them would not be pleasant
+    //er, i meant for easily trying new chunksizes, each map would only have 1 chunksize
+    k
+    Chunk[][][] chunks
+    string name
     
 blocklib.entity.Entity
     int entityID //which entity does this map to
-	int factionID //which faction does this entity belong to
+    int factionID //which faction does this entity belong to
     int uniqueID //a specific entity identifier
+    //how is this different from the entityID?
+    //the entityID would point to something like a rabbit npc, the uniqueID is the particular rabbit on the map
+    //ah.. so more like entity type
+    //yea, but it's not quite a type.  i picture the entity builder tool spits out an entity id.  the entity could be anytype of npc
+    //sounds good
+    // I would like to have a tool set, that allows you to build npc, items, buffs, etc
+    // everything is customizable with the world building tool.  makes for quick additions without code, as long as you aren't adding new functionality
     int claimedByID //the uniqueid which currently has claim of this entity, more used for monster claim
     int targettingID //the uniqueid that this entity is targetting
     int textureID //the current texture
     Vector3F position
-    Vector3F orientation
+    Vector3F orientation //might need an extra variable for this.. rotation around the orientation vector
     Vector3F dimension
     Vector3F velocity
     int health
@@ -89,18 +109,32 @@ blocklib.entity.Entity
     int state //bitwise-or to store values
 
 blocklib.entity.server.Character extends Entity
-	string name
-	int level
-	int baseHealth
-	int baseMana
-	Item[] inventory
-	EntityModifier[] modifiers //essentially buffs and debuffs
+    string name
+    int level
+    int baseHealth
+    int baseMana
+    Inventory inventory;
+    EntityModifier[] modifiers //essentially buffs and debuffs
+    //This should be a linked list
+    // i just did [] as shorthand, it can be any type of datastructure
+    k
+    
+    
+blocklib.entity.inventory
+    int width;
+    int height;
+    Item[][] items; //why 2d for inventory?
+    Easier to support items that take up more than one square if we want them
+    also, easier to write code to organize an inventory if its 2d (it will almost certainly be rendered as 2d)
+    //seems kind of tricky, if you allow the client to resize the inventory
+    I guess.. not that tricky? idk, prolly wont be important for awhile yet
+    //yea
 
 blocklib.entity.server.NPC extends Entity
-	Item[] inventory
+    Inventory inventory;
 
 blocklib.entity.Character extends Entity
-    Item[] inventory
+    Inventory inventory;
     
 blocklib.entity.client.ClientEntity extends Entity
     string name
@@ -114,3 +148,7 @@ blocklib.entity.State
     int HIT
     int CANFIGHT
     int MERCHANT
+
+
+some sort of Registry or central Property class that we can use to set various information without using constants scattered through the code.
+to be loaded from a file
