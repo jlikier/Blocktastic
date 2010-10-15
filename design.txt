@@ -4,6 +4,8 @@ blocklib
 blocklib.common
     blocklib.common.Vector3F
 
+* The map houses chunks and entities that currently reside in the map
+* Still deciding how exactly to deal with entities on the map
 blocklib.map
     blocklib.map.Map
     blocklib.map.Chunk
@@ -11,6 +13,10 @@ blocklib.map
         blocklib.map.Block
         blocklib.map.BlockType
     
+* An entity is an object with behavior/functionality that exists in a map
+	* Example: players, monsters, town npcs, vehicles
+* Includes a modifier system, for things like buffs/debuffs
+* Gear will probably use the modifier system 
 blocklib.entity
     blocklib.entity.Entity
     blocklib.entity.EntityModifier
@@ -20,10 +26,12 @@ blocklib.entity
     blocklib.entity.client
         blocklib.entity.client.Character
 
+* The builtin network packet builders and handlers
 blocklib.network.packets
 blocklib.network.client
 blocklib.network.server
 
+* The builtin graphics for opengl
 blocklib.graphics.*
 
 =================================================
