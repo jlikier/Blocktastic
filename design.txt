@@ -20,11 +20,11 @@ blocklib.entity
     blocklib.entity.client
         blocklib.entity.client.Character
 
-network.packets
-network.client
-network.server
+blocklib.network.packets
+blocklib.network.client
+blocklib.network.server
 
-graphics.*
+blocklib.graphics.*
 
 =================================================
 Blocktastic!
