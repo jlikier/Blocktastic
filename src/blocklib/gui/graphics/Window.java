@@ -42,34 +42,16 @@ public class Window {
 		if (Display.isVisible()) {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			renderFace();
-			//renderImpl(); //commenting to resolve issue
+			renderImpl(); 
 		}
 		Display.update();
 	}
 	
-	public void renderFace()
-	{
-		glPushMatrix();
-		
-		glBegin(GL_QUADS);
-		{
-			glVertex3f(-1, 1, -1);
-			glVertex3f(-1, -1, -1);
-			glVertex3f(1, -1, -1);
-			glVertex3f(1, 1, -1);
-		}
-		glEnd();
-		
-		glPopMatrix();
-	}
-	
 	public void renderImpl() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		angle += 1;
 
 		glPushMatrix(); {
-			glRotatef(angle, 1, 0, 0);
+			glRotatef(angle, 1, 1, 0);
 
 			glBegin(GL_QUADS); {
 				// Front Face
@@ -149,28 +131,21 @@ public class Window {
 	
 
 	private void glInit() {
-		glEnable(GL_LIGHTING); // commenting to resolve issue
-		//glEnable(GL_CULL_FACE); // commenting to resolve issue
+		glEnable(GL_LIGHTING); 
+		glEnable(GL_CULL_FACE);
 	    glEnable(GL_DEPTH_TEST);
-	    //glEnable(GL_COLOR); //commenting to resolve
-	    //glEnable(GL_DOUBLEBUFFER); // I read online that lwjgl defualts to double buffering
 	    
-	    glEnable(GL_LIGHT0); // commenting to resolve issue
-	    FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); // commenting to resolve issue
-	    glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); // commenting to resolve issue
+	    glEnable(GL_LIGHT0); 
+	    FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
+	    glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
 		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		//gluPerspective(45F, 1F, 0, 5); //commenting to resolve issue
 		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 128F);
 		glTranslatef(0,0,-32);
 		
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		//glViewport(0, 0, mode.getWidth(), mode.getHeight());
-		//glTranslatef(1,0,0); //left
-		//glTranslatef(0,1,0); //down
-		//glTranslatef(0,0,-5); // commenting to resolve issue
 		
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		Display.setVSyncEnabled(true);
