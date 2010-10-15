@@ -60,6 +60,7 @@ public class Map {
 		if(c!= null)
 		{
 			// Get block
+			b = c.getBlock(v);
 		}
 		
 		return b;
@@ -72,9 +73,12 @@ public class Map {
 		if(c==null)
 		{
 			// Create chunk
+			c = new Chunk(chunkSize);
+			setChunk(v, c);
 		}
 		
 		// Set the block
+		c.setBlock(v, b);
 	}
 	
 	public boolean validPosition(Vector3I v)
