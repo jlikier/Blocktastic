@@ -4,6 +4,7 @@
 package blocklib.map;
 
 import blocklib.common.*;
+import blocklib.map.block.*;
 
 public class Chunk {
 	public Vector3F dimension;
