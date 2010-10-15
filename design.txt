@@ -49,7 +49,7 @@ blocklib.map.block.Block
     Vector3F position
     Vector3F velocity
     int durability //how many hits left before breaking
-    int lastHitSeconds //how many seconds ago was it hit
+    void Update() //updates the state of the block *NEEDS REVIEW*
     
 blocklib.map.block.BlockType
     int typeID
@@ -110,7 +110,6 @@ blocklib.entity.Entity
 
 blocklib.entity.server.Character extends Entity
     string name
-    int level
     int baseHealth
     int baseMana
     Inventory inventory;
