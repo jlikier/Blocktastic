@@ -42,8 +42,11 @@ public class Map {
 	}
 	public void setChunk(Vector3I v, Chunk c)
 	{
+		int x = mapSize.x / v.x;
+		int y = mapSize.y / v.y;
+		int z = mapSize.z / v.z;
 		// If the position is valid, set the chunk
-		if(validPosition(v))
+		if(validPosition(x,y,z))
 		{
 			chunks[v.x][v.y][v.z] = c;
 		}
