@@ -2,11 +2,9 @@
 blocklib
 =================================================
 blocklib.common
-    This is where misc and general classes can go.
     blocklib.common.Vector3F
 
 blocklib.map
-    Anything related to the map can go in here.
     blocklib.map.Map
     blocklib.map.Chunk
     blocklib.map.block
@@ -32,11 +30,8 @@ graphics.*
 Blocktastic!
 =================================================
 blocktastic.client
-    The actual game client goes here.
 
 blocktastic.server
-    The actual game server goes here :)
-
 
 =================================================
 Class Sketches
@@ -44,17 +39,30 @@ Class Sketches
 blocklib.map.block.Block
     int typeID //which blocktype does this map to
     Vector3F position
-    Vector3F dimension
     Vector3F velocity
     int durability //how many hits left before breaking
     int lastHitSeconds //how many seconds ago was it hit
     
 blocklib.map.block.BlockType
     int typeID
+    Vector3F dimension
     boolean breakable
     int maxDurability //how many hits does it take to break
     int resetDurabilitySeconds //how many seconds does it take to reset durability
     int textureID //which texture does this block map to
+    float friction
+    boolean collidable
+    boolean transparent
+    
+blocklib.map.Chunk
+	Vector3F chunkSize
+	Block[][][] blocks
+	
+blocklib.map.Map
+	Vector3F mapSize
+	Vector3F chunkSize
+	Chunk[][][] chunks
+	string name
     
 blocklib.entity.Entity
     int entityID //which entity does this map to
@@ -74,6 +82,9 @@ blocklib.entity.Entity
 
 blocklib.entity.server.Character extends Entity
 	string name
+	int level
+	int baseHealth
+	int baseMana
 	Item[] inventory
 	EntityModifier[] modifiers //essentially buffs and debuffs
 
