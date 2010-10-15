@@ -7,18 +7,17 @@ import blocklib.common.*;
 import blocklib.map.block.*;
 
 public class Chunk {
-	public Vector3F dimension;
-	
+	public Vector3F chunkSize;
 	public Block[][][] blocks;
 	
-	public Chunk(Vector3F dimension)
+	public Chunk(Vector3F chunkSize)
 	{
-		Vector3F d = dimension.clone();
+		Vector3F d = chunkSize.clone();
 		int x = (int)d.x;
 		int y = (int)d.y;
 		int z = (int)d.z;
 		
-		this.dimension = d;
+		this.chunkSize = chunkSize;
 		this.blocks = new Block[x][y][z];
 	}
 }
