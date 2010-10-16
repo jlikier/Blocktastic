@@ -23,6 +23,7 @@ public class Window {
 	
 	// Begin Testing
 	VertexArrayTest test1;
+	TextureTest test2;
 	// End Testing
 
 	public Window() {
@@ -44,7 +45,11 @@ public class Window {
 		if (Display.isVisible()) {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			//renderImpl(); 
+			glPushMatrix(); {
+				glRotatef(angle++, 1f, 1f, 0f);
+				//renderImpl(); 
+				test2.DrawTexturedCube();
+			} glPopMatrix();
 		}
 		Display.update();
 	}
@@ -137,6 +142,7 @@ public class Window {
 		//glEnable(GL_LIGHTING); 
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_TEXTURE_2D);
 
 		//glEnable(GL_LIGHT0); 
 		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
@@ -145,16 +151,18 @@ public class Window {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 128F);
-		glTranslatef(0,0,-125);
+		glTranslatef(0,0,-10);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(1f, 1f, 1f, 0f);
 		Display.setVSyncEnabled(true);
 		
 		// Begin Testing
 		test1 = new VertexArrayTest();
+		test2 = new TextureTest();
 		// End Testing
 	}
 
