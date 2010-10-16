@@ -36,13 +36,13 @@ public class TextureTest {
 			glTexCoord2f(0.125f, 0.125f); glVertex3f( 1.0f, -1.0f,  1.0f);
 			glTexCoord2f(0.125f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
-			/*
 			// Back Face
 			glNormal3f( 0.0f, 0.0f,-0.5f);					
-			glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-			glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
-			glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
-			glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
+			glTexCoord2f(0.25f, 0.125f); glVertex3f(-1.0f, -1.0f, -1.0f);
+			glTexCoord2f(0.25f, 0.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
+			glTexCoord2f(0.125f, 0.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
+			glTexCoord2f(0.125f, 0.125f); glVertex3f( 1.0f, -1.0f, -1.0f);
+			/*
 			// Top Face
 			glNormal3f( 0.0f, 0.5f, 0.0f);					
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
