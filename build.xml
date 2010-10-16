@@ -10,9 +10,14 @@
 	<property name="lwjgl.native" value="${lwjgl}/native/${os}"/>
 	<!-- end lwjgl -->
 	
+	<!-- begin slick -->
+	<property name="slick" value="${lib}/slick"/>
+	<!-- end slick -->
+	
     <path id="classpath">
     	<!-- begin lwjgl -->
     	<fileset dir="${lwjgl.jar}" includes="*.jar"/>
+		<fileset dir="${slick}" includes="*.jar"/>
     	<!-- end lwjgl -->
     </path>
 
