@@ -6,10 +6,8 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.PixelFormat;
 
 import blocklib.gui.input.KeyboardHandler;
 
@@ -20,9 +18,12 @@ public class Window {
 	public KeyboardHandler kb;
 	private DisplayMode	mode;
 	boolean fullscreen;
-	FloatBuffer vertices;
 
 	float angle;
+	
+	// Begin Testing
+	VertexArrayTest test1;
+	// End Testing
 
 	public Window() {
 		kb = new KeyboardHandler();
@@ -44,35 +45,10 @@ public class Window {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			//renderImpl(); 
-			//renderVertexArray();
-			renderMoarCubes();
 		}
 		Display.update();
 	}
 
-	public void renderMoarCubes()
-	{
-		glPushMatrix();{
-			glTranslatef(-50,-50,0);
-			for(int x = 0; x < 100; x=x+5)
-			{
-				for(int y = 0; y < 100; y++)
-				{
-					glPushMatrix();{
-						glTranslatef(x,y,0);
-						renderVertexArray();
-					}glPopMatrix();
-				}
-			}
-		}glPopMatrix();
-	}
-	public void renderVertexArray()
-	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, 0, vertices);
-		glDrawArrays(GL_QUADS, 0, 12 * 5);
-		glDisableClientState(GL_VERTEX_ARRAY);
-	}
 
 	public void renderImpl() {
 		angle += 1;
@@ -177,7 +153,9 @@ public class Window {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		Display.setVSyncEnabled(true);
 		
-		CreateVertexArray();
+		// Begin Testing
+		test1 = new VertexArrayTest();
+		// End Testing
 	}
 
 	private DisplayMode findDisplayMode(int width, int height, int bpp) throws LWJGLException {
@@ -195,164 +173,4 @@ public class Window {
 		Display.destroy();
 	}
 	
-	public void CreateVertexArray()
-	{
-		vertices = BufferUtils.createFloatBuffer(3 * 4 * 6 * 5);
-		vertices.put(new float[] {
-				-1.0f, -1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f,
-				-1.0f, 1.0f, 1.0f,
-
-				-1.0f, -1.0f, -1.0f,
-				-1.0f, 1.0f, -1.0f,
-				1.0f, 1.0f, -1.0f,
-				1.0f, -1.0f, -1.0f,
-
-				-1.0f, 1.0f, -1.0f,
-				-1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, -1.0f,
-
-				-1.0f, -1.0f, -1.0f,
-				1.0f, -1.0f, -1.0f,
-				1.0f, -1.0f, 1.0f,
-				-1.0f, -1.0f, 1.0f,
-
-				1.0f, -1.0f, -1.0f,
-				1.0f, 1.0f, -1.0f,
-				1.0f, 1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f,
-
-				-1.0f, -1.0f, -1.0f,
-				-1.0f, -1.0f, 1.0f,
-				-1.0f, 1.0f, 1.0f,
-				-1.0f, 1.0f, -1.0f,
-
-				//cube 2
-				1.0f, -1.0f, 1.0f,
-				3.0f, -1.0f, 1.0f,
-				3.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f,
-				
-				1.0f, -1.0f, -1.0f,
-				1.0f, 1.0f, -1.0f,
-				3.0f, 1.0f, -1.0f,
-				3.0f, -1.0f, -1.0f,
-				
-				1.0f, 1.0f, -1.0f,
-				1.0f, 1.0f, 1.0f,
-				3.0f, 1.0f, 1.0f,
-				3.0f, 1.0f, -1.0f,
-				
-				1.0f, -1.0f, -1.0f,
-				3.0f, -1.0f, -1.0f,
-				3.0f, -1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f,
-				
-				3.0f, -1.0f, -1.0f,
-				3.0f, 1.0f, -1.0f,
-				3.0f, 1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f,
-				
-				1.0f, -1.0f, -1.0f,
-				1.0f, -1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, -1.0f,
-				
-				//cube 3
-				3.0f, -1.0f, 1.0f,
-				5.0f, -1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				3.0f, 1.0f, 1.0f,
-				
-				3.0f, -1.0f, -1.0f,
-				3.0f, 1.0f, -1.0f,
-				5.0f, 1.0f, -1.0f,
-				5.0f, -1.0f, -1.0f,
-				
-				3.0f, 1.0f, -1.0f,
-				3.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, -1.0f,
-				
-				3.0f, -1.0f, -1.0f,
-				5.0f, -1.0f, -1.0f,
-				5.0f, -1.0f, 1.0f,
-				3.0f, -1.0f, 1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				5.0f, 1.0f, -1.0f,
-				5.0f, 1.0f, 1.0f,
-				3.0f, -1.0f, 1.0f,
-				
-				3.0f, -1.0f, -1.0f,
-				3.0f, -1.0f, 1.0f,
-				3.0f, 1.0f, 1.0f,
-				3.0f, 1.0f, -1.0f,
-				
-				// cube 4
-				5.0f, -1.0f, 1.0f,
-				7.0f, -1.0f, 1.0f,
-				7.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				5.0f, 1.0f, -1.0f,
-				7.0f, 1.0f, -1.0f,
-				7.0f, -1.0f, -1.0f,
-				
-				5.0f, 1.0f, -1.0f,
-				5.0f, 1.0f, 1.0f,
-				7.0f, 1.0f, 1.0f,
-				7.0f, 1.0f, -1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				7.0f, -1.0f, -1.0f,
-				7.0f, -1.0f, 1.0f,
-				5.0f, -1.0f, 1.0f,
-				
-				7.0f, -1.0f, -1.0f,
-				7.0f, 1.0f, -1.0f,
-				7.0f, 1.0f, 1.0f,
-				5.0f, -1.0f, 1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				5.0f, -1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, -1.0f,
-				
-				//cube 5
-				5.0f, -1.0f, 1.0f,
-				7.0f, -1.0f, 1.0f,
-				7.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				5.0f, 1.0f, -1.0f,
-				7.0f, 1.0f, -1.0f,
-				7.0f, -1.0f, -1.0f,
-				
-				5.0f, 1.0f, -1.0f,
-				5.0f, 1.0f, 1.0f,
-				7.0f, 1.0f, 1.0f,
-				7.0f, 1.0f, -1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				7.0f, -1.0f, -1.0f,
-				7.0f, -1.0f, 1.0f,
-				5.0f, -1.0f, 1.0f,
-				
-				7.0f, -1.0f, -1.0f,
-				7.0f, 1.0f, -1.0f,
-				7.0f, 1.0f, 1.0f,
-				5.0f, -1.0f, 1.0f,
-				
-				5.0f, -1.0f, -1.0f,
-				5.0f, -1.0f, 1.0f,
-				5.0f, 1.0f, 1.0f,
-				5.0f, 1.0f, -1.0f
-		});
-		vertices.flip();
-	}
 }
