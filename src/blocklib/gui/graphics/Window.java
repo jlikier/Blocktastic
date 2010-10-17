@@ -143,6 +143,7 @@ public class Window {
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_POLYGON_SMOOTH);
 
 		//glEnable(GL_LIGHT0); 
 		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 

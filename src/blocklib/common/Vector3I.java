@@ -29,6 +29,10 @@ public class Vector3I {
 	{
 		return new Vector3I(x+v.x, y+v.y, z+v.z);
 	}
+	public Vector3I add(int x, int y, int z)
+	{
+		return new Vector3I(this.x + x, this.y + y, this.z + z);
+	}
 
 	public Vector3I scale(float factor)
 	{
