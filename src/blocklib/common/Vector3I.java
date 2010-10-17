@@ -44,4 +44,10 @@ public class Vector3I {
 	{
 		return this.scale(1.0F / getMagnitude());
 	}
+	
+	
+	public String toString()
+	{
+		return "{x="+x+",y="+y+",z="+z+"}";
+	}
 }

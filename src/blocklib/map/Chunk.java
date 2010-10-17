@@ -20,9 +20,9 @@ public class Chunk {
 	{
 		Block b = null;
 		
-		int x = chunkSize.x % v.x;
-		int y = chunkSize.y % v.y;
-		int z = chunkSize.z % v.z;
+		int x = chunkSize.x % ((v.x == 0) ? chunkSize.x : v.x);
+		int y = chunkSize.y % ((v.y == 0) ? chunkSize.y : v.y);
+		int z = chunkSize.z % ((v.z == 0) ? chunkSize.z : v.z);
 		
 		if(validPosition(x,y,z))
 		{
@@ -33,9 +33,9 @@ public class Chunk {
 	}
 	public void setBlock(Vector3I v, Block b)
 	{
-		int x = chunkSize.x % v.x;
-		int y = chunkSize.y % v.y;
-		int z = chunkSize.z % v.z;
+		int x = chunkSize.x % ((v.x == 0) ? chunkSize.x : v.x);
+		int y = chunkSize.y % ((v.y == 0) ? chunkSize.y : v.y);
+		int z = chunkSize.z % ((v.z == 0) ? chunkSize.z : v.z);
 		
 		if(validPosition(x,y,z))
 		{
