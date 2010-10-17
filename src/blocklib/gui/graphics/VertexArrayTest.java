@@ -30,10 +30,12 @@ public class VertexArrayTest {
 	}
 	public void renderChunkOptimization(ChunkOptimization co)
 	{
+		long sTime, eTime;
 		int total = 0;
 		glPushMatrix();{
 			for(int x = 0; x < 64; x++)
 			{
+				//sTime = System.currentTimeMillis();
 				glTranslatef(8,0,0);
 				glPushMatrix();{
 					for(int y = 0; y < 16; y++)
@@ -41,11 +43,13 @@ public class VertexArrayTest {
 						glTranslatef(0,8,0);
 						glEnableClientState(GL_VERTEX_ARRAY);
 						glVertexPointer(3, 0, co.vertices);
-						glDrawArrays(GL_QUADS, 0, co.blockCount * 3 * 3 * 4 * 6);
+						glDrawArrays(GL_QUADS, 0, co.blockCount * 3 * 4 * 6);
 						glDisableClientState(GL_VERTEX_ARRAY);
 						total += co.blockCount;
 					}
 				}glPopMatrix();
+				//eTime = System.currentTimeMillis();
+				//System.out.println(eTime - sTime);
 			}
 		}glPopMatrix();
 		System.out.println("Rendered "+total+" fully drawn cubes.");
