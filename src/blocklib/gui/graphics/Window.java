@@ -1,8 +1,5 @@
 package blocklib.gui.graphics;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -48,7 +45,8 @@ public class Window {
 			glPushMatrix(); {
 				glRotatef(angle++, 0f, 1f, 0f);
 				//renderImpl(); 
-				test2.DrawTexturedCube();
+				test1.renderChunkOptimization();
+				//test2.DrawTexturedCube();
 			} glPopMatrix();
 		}
 		Display.update();
@@ -151,15 +149,15 @@ public class Window {
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 128F);
-		glTranslatef(0,0,-10);
+		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 1000F);
+		glTranslatef(0,-64,-127);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
 		//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClearColor(1f, 1f, 1f, 0f);
-		Display.setVSyncEnabled(true);
+		//Display.setVSyncEnabled(true);
 		
 		// Begin Testing
 		test1 = new VertexArrayTest();

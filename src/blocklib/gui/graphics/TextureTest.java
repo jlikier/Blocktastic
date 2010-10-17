@@ -1,9 +1,6 @@
 package blocklib.gui.graphics;
 
-import java.nio.FloatBuffer;
 import java.io.*;
-
-import org.lwjgl.BufferUtils;
 
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;

@@ -6,6 +6,8 @@ import blocklib.common.*;
 import blocklib.map.*;
 import blocklib.map.block.*;
 
+import org.lwjgl.BufferUtils;
+
 public class ChunkOptimization {
 	public int blockCount;
 	public FloatBuffer vertices;
@@ -16,7 +18,8 @@ public class ChunkOptimization {
 	}
 	public ChunkOptimization(int x, int y, int z)
 	{
-		vertices = FloatBuffer.allocate(x*y*z*3);
+		// 3 floats per vector, 4 vectors per face, 6 faces per block
+		vertices = BufferUtils.createFloatBuffer(x*y*z*3*4*6);
 		blockCount = 0;
 	}
 	
@@ -61,6 +64,7 @@ public class ChunkOptimization {
 						{
 							blockCount++;
 							AddVertices(cursor);
+							System.out.println(cursor);
 						}
 					}
 				}
@@ -73,31 +77,41 @@ public class ChunkOptimization {
 	
 	public void AddVertices(Vector3I v)
 	{
-		// 3 floats per vector, 4 vectors per face, 6 faces per block
-		
 		//front
-		vertices.put(new float[] {-1 + v.x, 1 + v.y, -1 + v.z});
-		vertices.put(new float[] {-1 + v.x, -1 + v.y, -1 + v.z});
-		vertices.put(new float[] {1 + v.x, -1 + v.y, -1 + v.z});
-		vertices.put(new float[] {1 + v.x, 1 + v.y, -1 + v.z});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
 		
 		//back
-		vertices.put(new float[] {1 + v.x, 1 + v.y, 1 + v.z});
-		vertices.put(new float[] {1 + v.x, -1 + v.y, 1 + v.z});
-		vertices.put(new float[] {-1 + v.x, -1 + v.y, 1 + v.z});
-		vertices.put(new float[] {-1 + v.x, 1 + v.y, 1 + v.z});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
 		
 		//top
-		vertices.put(new float[] {});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
 		
 		//bottom
-		vertices.put(new float[] {});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
 		
 		//left
-		vertices.put(new float[] {});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
 		
 		//right
-		vertices.put(new float[] {});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
+		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
 		
 	}
 	

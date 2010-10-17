@@ -84,5 +84,21 @@ public class TestRunner {
 		System.out.println("Visible Blocks: " + co.blockCount);
 		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
 		
+		for(int x = 0; x < c.chunkSize.x; x++)
+		{
+			for(int y = 0; y < c.chunkSize.y; y++)
+			{
+				for(int z = 0; z < c.chunkSize.z; z++)
+				{
+					c.setBlock(new Vector3I(x,y,z), new Block());
+				}
+			}
+		}
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
 	}
 }
