@@ -83,5 +83,6 @@ public class TestRunner {
 		eTime = System.currentTimeMillis();
 		System.out.println("Visible Blocks: " + co.blockCount);
 		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
 	}
 }

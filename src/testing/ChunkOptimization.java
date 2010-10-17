@@ -26,6 +26,7 @@ public class ChunkOptimization {
 		Vector3I cursor = new Vector3I(0,0,0);
 		Vector3I offset;
 		blockCount = 0;
+		vertices.clear();
 		
 		for(int x = 0; x < c.chunkSize.x; x++)
 		{
@@ -59,11 +60,44 @@ public class ChunkOptimization {
 						if(isVisible(top,bottom,front,back,left,right))
 						{
 							blockCount++;
+							AddVertices(cursor);
 						}
 					}
 				}
 			}
 		}
+		
+		vertices.flip();
+		
+	}
+	
+	public void AddVertices(Vector3I v)
+	{
+		// 3 floats per vector, 4 vectors per face, 6 faces per block
+		
+		//front
+		vertices.put(new float[] {-1 + v.x, 1 + v.y, -1 + v.z});
+		vertices.put(new float[] {-1 + v.x, -1 + v.y, -1 + v.z});
+		vertices.put(new float[] {1 + v.x, -1 + v.y, -1 + v.z});
+		vertices.put(new float[] {1 + v.x, 1 + v.y, -1 + v.z});
+		
+		//back
+		vertices.put(new float[] {1 + v.x, 1 + v.y, 1 + v.z});
+		vertices.put(new float[] {1 + v.x, -1 + v.y, 1 + v.z});
+		vertices.put(new float[] {-1 + v.x, -1 + v.y, 1 + v.z});
+		vertices.put(new float[] {-1 + v.x, 1 + v.y, 1 + v.z});
+		
+		//top
+		vertices.put(new float[] {});
+		
+		//bottom
+		vertices.put(new float[] {});
+		
+		//left
+		vertices.put(new float[] {});
+		
+		//right
+		vertices.put(new float[] {});
 		
 	}
 	
