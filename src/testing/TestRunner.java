@@ -35,5 +35,53 @@ public class TestRunner {
 		eTime = System.currentTimeMillis();
 		System.out.println("Visible Blocks: " + co.blockCount);
 		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(5,6,5), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(5,4,5), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(4,5,5), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(6,5,5), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(5,5,4), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
+		
+		c.setBlock(new Vector3I(5,5,6), new Block());
+		
+		sTime = System.currentTimeMillis();
+		co.CalculateChunk(c);
+		eTime = System.currentTimeMillis();
+		System.out.println("Visible Blocks: " + co.blockCount);
+		System.out.println("Time to execute: " + (eTime - sTime) + "ms");
 	}
 }
