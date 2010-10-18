@@ -2,7 +2,6 @@ package testing;
 
 import blocklib.common.*;
 import blocklib.map.*;
-import blocklib.map.block.*;
 
 public class TestRunner {
 

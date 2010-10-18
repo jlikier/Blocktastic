@@ -4,7 +4,6 @@ import java.nio.FloatBuffer;
 
 import blocklib.common.*;
 import blocklib.map.*;
-import blocklib.map.block.*;
 
 import org.lwjgl.BufferUtils;
 

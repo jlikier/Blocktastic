@@ -7,7 +7,6 @@ import java.util.Random;
 
 import blocklib.common.*;
 import blocklib.map.*;
-import blocklib.map.block.*;
 import testing.ChunkOptimization;
 
 import static org.lwjgl.opengl.GL11.*;

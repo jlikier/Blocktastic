@@ -4,7 +4,6 @@
 package blocklib.map;
 
 import blocklib.common.*;
-import blocklib.map.block.*;
 
 public class Map {
 	public Vector3I mapSize;
