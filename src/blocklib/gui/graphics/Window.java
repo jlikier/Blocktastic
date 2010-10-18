@@ -60,11 +60,11 @@ public class Window {
 	public void renderVBO()
 	{
 		int total = 0;
-		for(int x = 0; x < 64; x=x+3)
+		for(int x = 0; x < 24; x=x+3)
 		{
 			glPushMatrix(); {
 				glTranslatef(x*8,0,0);
-				for(int y = 0; y < 64; y++)
+				for(int y = 0; y < 24; y++)
 				{
 					glPushMatrix(); {
 						glTranslatef(0,y*8,0);
@@ -178,7 +178,7 @@ public class Window {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 1000F);
-		glTranslatef(0,-256,-128);
+		glTranslatef(0,-32,-128);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
