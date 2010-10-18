@@ -15,16 +15,17 @@ import static org.lwjgl.opengl.GL11.*;
 public class VertexArrayTest {
 	FloatBuffer vertices;
 	Chunk c;
-	ChunkOptimization co;
-	FloatBuffer batch;
+	public ChunkOptimization co;
+	public FloatBuffer batch;
+	public int batchsize;
 	Random r;
 	
 	public VertexArrayTest()
 	{
 		r = new Random();
+		batch = BufferUtils.createFloatBuffer(8*8*8*3*4*6*16);
 		CreateVertexArray();
 		CreateChunk();
-		batch = BufferUtils.createFloatBuffer(8*8*8*3*4*6*16);
 	}
 	public void renderChunkOptimization()
 	{
@@ -54,7 +55,7 @@ public class VertexArrayTest {
 		int total = 0;
 		//s = System.nanoTime();
 		glPushMatrix();{
-			for(int x = 0; x < 64; x++)
+			for(int x = 0; x < 32; x++)
 			{
 				glTranslatef(8,0,0);
 				glPushMatrix();{
@@ -73,7 +74,7 @@ public class VertexArrayTest {
 		//e = System.nanoTime();
 		//System.out.println((e-s));
 		//System.out.println((e-s) / 1000000f);
-		//System.out.println("Rendered "+total+" fully drawn cubes.");
+		System.out.println("Rendered "+total+" fully drawn cubes.");
 	}
 	public void renderMoarCubes()
 	{
@@ -110,7 +111,7 @@ public class VertexArrayTest {
 		c = new Chunk(new Vector3I(8,8,8));
 		Vector3I v;
 		
-		for(int i = 0; i < 64; i++)
+		for(int i = 0; i < 128; i++)
 		{
 			v = new Vector3I(r.nextInt(7), r.nextInt(7), r.nextInt(7));
 			c.setBlock(v, new Block());
@@ -118,6 +119,12 @@ public class VertexArrayTest {
 		
 		co = new ChunkOptimization(c.chunkSize);
 		co.CalculateChunk(c);
+		
+		batch.put(co.vertices);
+		batch.put(co.vertices);
+		batch.put(co.vertices);
+		batchsize = co.blockCount * 3;
+		batch.flip();
 	}
 	public void CreateVertexArray()
 	{

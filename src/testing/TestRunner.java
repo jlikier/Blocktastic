@@ -9,7 +9,7 @@ public class TestRunner {
 	public static void main(String[] args) {
 		TestRunner r = new TestRunner();
 		
-		r.ChunkOptimizationTest();
+		//r.ChunkOptimizationTest();
 	}
 	
 	public void ChunkOptimizationTest()
