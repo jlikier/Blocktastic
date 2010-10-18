@@ -16,6 +16,7 @@ public class VertexArrayTest {
 	FloatBuffer vertices;
 	Chunk c;
 	ChunkOptimization co;
+	FloatBuffer batch;
 	Random r;
 	
 	public VertexArrayTest()
@@ -23,19 +24,38 @@ public class VertexArrayTest {
 		r = new Random();
 		CreateVertexArray();
 		CreateChunk();
+		batch = BufferUtils.createFloatBuffer(8*8*8*3*4*6*16);
 	}
 	public void renderChunkOptimization()
 	{
+		/*
+		int count = 0;
+		for(int x = 0; x < 64; x++)
+		{
+			count = 0;
+			batch.clear();
+			for(int y = 0; y < 16; y++)
+			{
+				batch.put(co.vertices);
+				count += co.blockCount;
+			}
+			batch.flip();
+			//long s = System.nanoTime();
+			renderVertexArray(batch, count * 3 * 4 * 6);
+			//long e = System.nanoTime();
+			//System.out.println(e - s);
+		}
+		*/
 		renderChunkOptimization(co);
 	}
 	public void renderChunkOptimization(ChunkOptimization co)
 	{
-		long sTime, eTime;
+		long s, e;
 		int total = 0;
+		//s = System.nanoTime();
 		glPushMatrix();{
 			for(int x = 0; x < 64; x++)
 			{
-				//sTime = System.currentTimeMillis();
 				glTranslatef(8,0,0);
 				glPushMatrix();{
 					for(int y = 0; y < 16; y++)
@@ -48,11 +68,12 @@ public class VertexArrayTest {
 						total += co.blockCount;
 					}
 				}glPopMatrix();
-				//eTime = System.currentTimeMillis();
-				//System.out.println(eTime - sTime);
 			}
 		}glPopMatrix();
-		System.out.println("Rendered "+total+" fully drawn cubes.");
+		//e = System.nanoTime();
+		//System.out.println((e-s));
+		//System.out.println((e-s) / 1000000f);
+		//System.out.println("Rendered "+total+" fully drawn cubes.");
 	}
 	public void renderMoarCubes()
 	{
@@ -75,6 +96,13 @@ public class VertexArrayTest {
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, 0, vertices);
 		glDrawArrays(GL_QUADS, 0, 12 * 5);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+	public void renderVertexArray(FloatBuffer buffer, int count)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3,0,buffer);
+		glDrawArrays(GL_QUADS, 0, count);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 	public void CreateChunk()

@@ -9,8 +9,40 @@ import blocklib.map.block.*;
 import org.lwjgl.BufferUtils;
 
 public class ChunkOptimization {
+	public long total;
 	public int blockCount;
 	public FloatBuffer vertices;
+	float[] cube = {
+			-0.5f, 0.5f, 0.5f,
+			-0.5f, -0.5f, 0.5f,
+			0.5f, -0.5f, 0.5f,
+			0.5f, 0.5f, 0.5f,
+
+			0.5f, 0.5f, -0.5f,
+			0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+			-0.5f, 0.5f, -0.5f,
+
+			-0.5f, 0.5f, -0.5f,
+			-0.5f, 0.5f, 0.5f,
+			0.5f, 0.5f, 0.5f,
+			0.5f, 0.5f, -0.5f,
+
+			0.5f, -0.5f, -0.5f,
+			0.5f, -0.5f, 0.5f,
+			-0.5f, -0.5f, 0.5f,
+			-0.5f, -0.5f, -0.5f,
+
+			-0.5f, 0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f, 0.5f,
+			-0.5f, 0.5f, 0.5f,
+
+			0.5f, 0.5f, 0.5f,
+			0.5f, -0.5f, 0.5f,
+			0.5f, -0.5f, -0.5f,
+			0.5f, 0.5f, -0.5f
+	};
 	
 	public ChunkOptimization(Vector3I v)
 	{
@@ -21,6 +53,15 @@ public class ChunkOptimization {
 		// 3 floats per vector, 4 vectors per face, 6 faces per block
 		vertices = BufferUtils.createFloatBuffer(x*y*z*3*4*6);
 		blockCount = 0;
+		total = 0;
+	}
+	public void BeginBatch()
+	{
+		vertices.clear();
+	}
+	public void EndBatch()
+	{
+		vertices.flip();
 	}
 	
 	public void CalculateChunk(Chunk c)
@@ -30,7 +71,6 @@ public class ChunkOptimization {
 		Vector3I offset;
 		blockCount = 0;
 		vertices.clear();
-		
 		for(int x = 0; x < c.chunkSize.x; x++)
 		{
 			for(int y = 0; y < c.chunkSize.y; y++)
@@ -70,49 +110,35 @@ public class ChunkOptimization {
 				}
 			}
 		}
-		
 		vertices.flip();
-		
 	}
 	
 	public void AddVertices(Vector3I v)
 	{
-		//front
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
+		long s, e;
 		
-		//back
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
+		//s = System.nanoTime();
+		float[] temp = cube.clone();
+		// x offset
+		for(int i = 0; i < temp.length; i=i+3)
+		{
+			temp[i] += v.x;
+		}
+		//y offset
+		for(int i = 1; i < temp.length; i=i+3)
+		{
+			temp[i] += v.y;
+		}
+		//z offset
+		for(int i = 2; i < temp.length; i=i+3)
+		{
+			temp[i] += v.z;
+		}
 		
-		//top
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
-		
-		//bottom
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		
-		//left
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {-0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
-		
-		//right
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, 0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, -0.5f + v.y, -0.5f + v.z});
-		vertices.put(new float[] {0.5f + v.x, 0.5f + v.y, -0.5f + v.z});
-		
+		vertices.put(temp);
+		//e = System.nanoTime();
+		//total += e - s;
+		//System.out.println(total / 1000000f);
 	}
 	
 	public static boolean isVisible(Block top,
