@@ -32,13 +32,15 @@ public class OptimizedChunk {
 		ARBVertexBufferObject.glBindBufferARB(ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, vboid);
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, 0);
-		glDrawArrays(GL_QUADS, 0, verticecount * 3);
+		glDrawArrays(GL_QUADS, 0, verticecount);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		ARBVertexBufferObject.glBindBufferARB(ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, 0);
 	}
 	public void bufferData()
 	{
 		ARBVertexBufferObject.glBindBufferARB(ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, vboid);
 		ARBVertexBufferObject.glBufferDataARB(ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, vertices, ARBVertexBufferObject.GL_DYNAMIC_DRAW_ARB);
+		ARBVertexBufferObject.glBindBufferARB(ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, 0);
 	}
 	public void putVertice(Vector3F v)
 	{
@@ -65,7 +67,7 @@ public class OptimizedChunk {
 					{
 						//top
 						test = cursor.add(0,1,0);
-						temp = c.getBlock(cursor);
+						temp = c.getBlock(test);
 						if(!c.validPosition(test) || temp == null)
 						{
 							f = BlockFace.topFace.offset(offset.add(x, y, z));

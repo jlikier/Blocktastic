@@ -44,7 +44,7 @@ public class Window {
 		}
 		
 		cam = new Camera(mode,
-				new Vector3F(0, -64F, -512F),//position
+				new Vector3F(0, 0, -32),//position
 				new Vector3F(0, 0, 1),//heading
 				new Vector3F(0, 1, 0)//up
 				);
@@ -62,8 +62,8 @@ public class Window {
 			cam.transform();
 			
 			glPushMatrix(); {
-				//angle = angle + 0.25f;
-				angle++;
+				angle = angle + 0.25f;
+				//angle++;
 				glRotatef(angle, 0f, 1f, 0f);
 				//glRotatef(45f, 0f, 1f, 0f);
 				//renderImpl(); 
@@ -148,7 +148,7 @@ public class Window {
 		glEnable(GL_TEXTURE_2D);
 		//glEnable(GL_POLYGON_SMOOTH);
 
-		glEnable(GL_LIGHT0); 
+		//glEnable(GL_LIGHT0); 
 		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
 		//glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
 
@@ -164,6 +164,8 @@ public class Window {
 		Vector3I chunkSize = new Vector3I(8,8,8);
 		mapRenderer = new MapRenderer(chunkSize);
 		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(0,0,0));
+		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(8,0,0));
+		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(16,0,0));
 		for(int x = 0; x < 512; x=x+8)
 		{
 			for(int z = 0; z < 128; z=z+8)

@@ -63,14 +63,15 @@ public class Chunk {
 		Chunk c = new Chunk(chunkSize);
 		Random r = new Random();
 		
+		//c.setBlock(new Vector3I(0,0,0), new Block());
 		for(int x = 0; x < chunkSize.x; x++)
 		{
 			for(int y = 0; y < chunkSize.y; y++)
 			{
 				for(int z = 0; z < chunkSize.z; z++)
 				{
-					//c.setBlock(new Vector3I(r.nextInt(chunkSize.x), r.nextInt(chunkSize.y), r.nextInt(chunkSize.z)), new Block());
-					c.setBlock(new Vector3I(x,y,z), new Block());
+					c.setBlock(new Vector3I(r.nextInt(chunkSize.x), r.nextInt(chunkSize.y), r.nextInt(chunkSize.z)), new Block());
+					//c.setBlock(new Vector3I(x,y,z), new Block());
 				}
 			}
 		}
