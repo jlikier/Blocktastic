@@ -19,6 +19,12 @@ public class Vector3F {
 	{
 		return new Vector3F(x,y,z);
 	}
+	
+	public void overwriteWith(Vector3F b) {
+		this.x = b.x;
+		this.y = b.y;
+		this.z = b.z;
+	}
 
 	public float getMagnitude()
 	{
@@ -29,6 +35,7 @@ public class Vector3F {
 	{
 		return new Vector3F(x+v.x, y+v.y, z+v.z);
 	}
+	
 	public Vector3F add(Vector3I v)
 	{
 		return new Vector3F(x+v.x, y+v.y, z+v.z);
@@ -44,8 +51,31 @@ public class Vector3F {
 	{
 		return this.scale(1.0F / getMagnitude());
 	}
+	
+	public Vector3F cross(Vector3F b) {
+		//	|i  		j		k   |
+		//	|a.x		a.y		a.z |
+		//	|b.x		b.y		b.z |
+		
+		// a x b  =   i|a.y  a.z |   -  j|a.x  a.z|   +  k|a.x  a.y|
+		//             |b.y  b.z |       |b.x  b.z|       |b.x  b.y|
+		
+		Vector3F a = this;
+		float xx = det2x2(a.y, a.z, b.y, b.z);
+		float yy = -det2x2(a.x, a.z, b.x, b.z);
+		float zz = det2x2(a.x, a.y, b.x, b.y);
+		
+		return new Vector3F(xx,yy,zz);
+	}
+	
+	private float det2x2(float a, float b, float c, float d) {
+		//	|a  b|
+		//	|c  d|
+		return a * d - (b * c);
+	}
+	
 	public String toString()
 	{
-		return "{x="+x+",y="+y+",z="+z+"}";
+		return "{"+x+", "+y+", "+z+"}";
 	}
 }

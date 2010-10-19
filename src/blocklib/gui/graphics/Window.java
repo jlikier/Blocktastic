@@ -105,6 +105,9 @@ public class Window {
 		float cam_speed = 10.0F;
 		if (kb.isDown(Keyboard.KEY_W)) cam.position.z += cam_speed;
 		if (kb.isDown(Keyboard.KEY_S)) cam.position.z -= cam_speed;
+		
+		if (kb.isDown(Keyboard.KEY_A)) cam.heading.x += .01;
+		if (kb.isDown(Keyboard.KEY_D)) cam.heading.x -= .01;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
 			if (fullscreen) 
