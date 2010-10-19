@@ -43,6 +43,7 @@ public class MapRenderer {
 	
 	public void render()
 	{
+		int totalFaces = 0;
 		if(vboid>0)
 		{
 			int count = 0;
@@ -58,6 +59,7 @@ public class MapRenderer {
 				
 				for(QuadFace f : c.faces)
 				{
+					totalFaces++;
 					faces++;
 					//System.out.println("Face");
 					//System.out.println(f.v1);
@@ -95,6 +97,7 @@ public class MapRenderer {
 				vertices.flip();
 				renderVBO(faces * 3 * 4);
 			}
+			System.out.println("Total Faces: " + totalFaces);
 		}
 	}
 	public void renderVBO(int size)

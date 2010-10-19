@@ -8,6 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 
 import blocklib.gui.input.KeyboardHandler;
 import blocklib.gui.graphics.rendering.*;
+import blocklib.map.Chunk;
 import blocklib.common.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -50,7 +51,10 @@ public class Window {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glPushMatrix(); {
-				glRotatef(angle++, 0f, 1f, 0f);
+				//angle = angle + 0.25f;
+				angle++;
+				glRotatef(angle, 0f, 1f, 0f);
+				//glRotatef(45f, 0f, 1f, 0f);
 				//renderImpl(); 
 				//test1.renderChunkOptimization();
 				//test2.DrawTexturedCube();
@@ -182,7 +186,7 @@ public class Window {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 1000F);
-		glTranslatef(0,0,-20);
+		glTranslatef(0, -64, -512);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -196,10 +200,16 @@ public class Window {
 		//test2 = new TextureTest();
 		//test3 = new VBOTest();
 		//test3.GenerateBuffer();
-		mapRenderer = new MapRenderer(new Vector3I(8,8,8));
-		mapRenderer.addChunk(null, new Vector3I(0,0,0));
-		mapRenderer.addChunk(null, new Vector3I(5,5,5));
-		mapRenderer.addChunk(null, new Vector3I(11,11,11));
+		Vector3I chunkSize = new Vector3I(8,8,8);
+		mapRenderer = new MapRenderer(chunkSize);
+		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(0,0,0));
+		for(int x = 0; x < 512; x=x+8)
+		{
+			for(int y = 0; y < 128; y=y+8)
+			{
+				mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(x,y,0));
+			}
+		}
 		// End Testing
 	}
 
