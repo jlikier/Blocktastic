@@ -19,9 +19,10 @@ public class Window {
 	public KeyboardHandler kb;
 	private DisplayMode	mode;
 	boolean fullscreen;
-
-	float angle;
 	
+	float angle;
+
+	Camera cam;
 	
 	// Begin Testing
 	VertexArrayTest test1;
@@ -31,6 +32,7 @@ public class Window {
 	// End Testing
 
 	public Window() {
+		
 		kb = new KeyboardHandler();
 		windowed();
 		try {
@@ -39,6 +41,12 @@ public class Window {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		cam = new Camera(mode,
+				new Vector3F(0, 0, -20F),//position
+				new Vector3F(0, 0, 1),//heading
+				new Vector3F(0, 1, 0)//up
+				);
 	}
 
 	public boolean shouldExit() {
@@ -49,6 +57,9 @@ public class Window {
 		if (Display.isVisible()) {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
+			cam.transform();
+			
 			glPushMatrix(); {
 				glRotatef(angle++, 0f, 1f, 0f);
 				//renderImpl(); 
@@ -84,57 +95,12 @@ public class Window {
 		System.out.println(total);
 	}
 
-
-	public void renderImpl() {
-		angle += 1;
-
-		glPushMatrix(); {
-			glRotatef(angle, 1, 1, 0);
-
-			glBegin(GL_QUADS); {
-				// Front Face
-				glNormal3f( 0.0f, 0.0f, 0.5f);					
-				glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
-				glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
-				glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
-				// Back Face
-				glNormal3f( 0.0f, 0.0f,-0.5f);					
-				glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-				glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
-				glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
-				// Top Face
-				glNormal3f( 0.0f, 0.5f, 0.0f);					
-				glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
-				glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
-				glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
-				glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
-				// Bottom Face
-				glNormal3f( 0.0f,-0.5f, 0.0f);					
-				glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
-				glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
-				glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
-				// Right Face
-				glNormal3f( 0.5f, 0.0f, 0.0f);					
-				glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
-				glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
-				glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
-				// Left Face
-				glNormal3f(-0.5f, 0.0f, 0.0f);					
-				glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
-				glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
-				glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
-				glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
-			} glEnd();
-
-		} glPopMatrix();
-	}
-
 	private void processKeyboard() {
 		kb.handle();
+		
+		float cam_speed = .5F;
+		if (kb.isDown(Keyboard.KEY_W)) cam.position.z += cam_speed;
+		if (kb.isDown(Keyboard.KEY_S)) cam.position.z -= cam_speed;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
 			if (fullscreen) 
@@ -175,17 +141,10 @@ public class Window {
 		glEnable(GL_TEXTURE_2D);
 		//glEnable(GL_POLYGON_SMOOTH);
 
-		//glEnable(GL_LIGHT0); 
+		glEnable(GL_LIGHT0); 
 		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
 		//glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 1000F);
-		glTranslatef(0,0,-20);
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		//glClearColor(1f, 1f, 1f, 0f);
