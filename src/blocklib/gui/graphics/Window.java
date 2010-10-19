@@ -166,9 +166,9 @@ public class Window {
 		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(0,0,0));
 		for(int x = 0; x < 512; x=x+8)
 		{
-			for(int y = 0; y < 128; y=y+8)
+			for(int z = 0; z < 128; z=z+8)
 			{
-				mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(x,y,0));
+				mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(x,0,z));
 			}
 		}
 		// End Testing

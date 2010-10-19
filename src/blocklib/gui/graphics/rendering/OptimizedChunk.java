@@ -23,7 +23,7 @@ public class OptimizedChunk {
 	public OptimizedChunk(Chunk c, Vector3I offset)
 	{
 		this();
-		vertices = BufferUtils.createFloatBuffer(c.chunkSize.x * c.chunkSize.y * c.chunkSize.z * 3 * 4 * 6);
+		vertices = BufferUtils.createFloatBuffer(c.chunkSize.x * c.chunkSize.y * c.chunkSize.z * 3 * 4 * 3);
 		verticecount = 0;
 		generateFaces(c, offset);
 	}
