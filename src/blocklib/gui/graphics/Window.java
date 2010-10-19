@@ -192,10 +192,10 @@ public class Window {
 		//Display.setVSyncEnabled(true);
 		
 		// Begin Testing
-		test1 = new VertexArrayTest();
-		test2 = new TextureTest();
-		test3 = new VBOTest();
-		test3.GenerateBuffer();
+		//test1 = new VertexArrayTest();
+		//test2 = new TextureTest();
+		//test3 = new VBOTest();
+		//test3.GenerateBuffer();
 		mapRenderer = new MapRenderer(new Vector3I(8,8,8));
 		mapRenderer.addChunk(null, new Vector3I(0,0,0));
 		mapRenderer.addChunk(null, new Vector3I(5,5,5));
