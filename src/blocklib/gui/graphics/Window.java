@@ -8,6 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 
 import blocklib.gui.input.KeyboardHandler;
 import blocklib.gui.graphics.rendering.*;
+import blocklib.map.Chunk;
 import blocklib.common.*;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -43,7 +44,7 @@ public class Window {
 		}
 		
 		cam = new Camera(mode,
-				new Vector3F(0, 0, -20F),//position
+				new Vector3F(0, -64F, -512F),//position
 				new Vector3F(0, 0, 1),//heading
 				new Vector3F(0, 1, 0)//up
 				);
@@ -61,7 +62,10 @@ public class Window {
 			cam.transform();
 			
 			glPushMatrix(); {
-				glRotatef(angle++, 0f, 1f, 0f);
+				//angle = angle + 0.25f;
+				angle++;
+				glRotatef(angle, 0f, 1f, 0f);
+				//glRotatef(45f, 0f, 1f, 0f);
 				//renderImpl(); 
 				//test1.renderChunkOptimization();
 				//test2.DrawTexturedCube();
@@ -98,7 +102,7 @@ public class Window {
 	private void processKeyboard() {
 		kb.handle();
 		
-		float cam_speed = .5F;
+		float cam_speed = 10.0F;
 		if (kb.isDown(Keyboard.KEY_W)) cam.position.z += cam_speed;
 		if (kb.isDown(Keyboard.KEY_S)) cam.position.z -= cam_speed;
 
@@ -145,7 +149,6 @@ public class Window {
 		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
 		//glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
 
-
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		//glClearColor(1f, 1f, 1f, 0f);
 		//Display.setVSyncEnabled(true);
@@ -155,10 +158,16 @@ public class Window {
 		//test2 = new TextureTest();
 		//test3 = new VBOTest();
 		//test3.GenerateBuffer();
-		mapRenderer = new MapRenderer(new Vector3I(8,8,8));
-		mapRenderer.addChunk(null, new Vector3I(0,0,0));
-		mapRenderer.addChunk(null, new Vector3I(5,5,5));
-		mapRenderer.addChunk(null, new Vector3I(11,11,11));
+		Vector3I chunkSize = new Vector3I(8,8,8);
+		mapRenderer = new MapRenderer(chunkSize);
+		//mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(0,0,0));
+		for(int x = 0; x < 512; x=x+8)
+		{
+			for(int y = 0; y < 128; y=y+8)
+			{
+				mapRenderer.addChunk(Chunk.genRandomChunk(chunkSize), new Vector3I(x,y,0));
+			}
+		}
 		// End Testing
 	}
 

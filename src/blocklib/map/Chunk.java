@@ -4,6 +4,7 @@
 package blocklib.map;
 
 import blocklib.common.*;
+import java.util.Random;
 
 public class Chunk {
 	public Vector3I chunkSize;
@@ -55,5 +56,25 @@ public class Chunk {
 			return false;
 		}
 		return true;
+	}
+	
+	public static Chunk genRandomChunk(Vector3I chunkSize)
+	{
+		Chunk c = new Chunk(chunkSize);
+		Random r = new Random();
+		
+		for(int x = 0; x < chunkSize.x; x++)
+		{
+			for(int y = 0; y < chunkSize.y; y++)
+			{
+				for(int z = 0; z < chunkSize.z; z++)
+				{
+					//c.setBlock(new Vector3I(r.nextInt(chunkSize.x), r.nextInt(chunkSize.y), r.nextInt(chunkSize.z)), new Block());
+					c.setBlock(new Vector3I(x,y,z), new Block());
+				}
+			}
+		}
+
+		return c;
 	}
 }
