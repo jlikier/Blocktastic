@@ -7,6 +7,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import blocklib.gui.input.KeyboardHandler;
+import blocklib.gui.graphics.rendering.*;
+import blocklib.common.*;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
@@ -25,6 +27,7 @@ public class Window {
 	VertexArrayTest test1;
 	TextureTest test2;
 	VBOTest test3;
+	MapRenderer mapRenderer;
 	// End Testing
 
 	public Window() {
@@ -51,7 +54,8 @@ public class Window {
 				//renderImpl(); 
 				//test1.renderChunkOptimization();
 				//test2.DrawTexturedCube();
-				renderVBO();
+				//renderVBO();
+				mapRenderer.render();
 			} glPopMatrix();
 		}
 		Display.update();
@@ -178,7 +182,7 @@ public class Window {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(45F, mode.getWidth() / (float)mode.getHeight(), 1F, 1000F);
-		glTranslatef(0,-32,-128);
+		glTranslatef(0,0,-20);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -192,6 +196,10 @@ public class Window {
 		test2 = new TextureTest();
 		test3 = new VBOTest();
 		test3.GenerateBuffer();
+		mapRenderer = new MapRenderer(new Vector3I(8,8,8));
+		mapRenderer.addChunk(null, new Vector3I(0,0,0));
+		mapRenderer.addChunk(null, new Vector3I(5,5,5));
+		mapRenderer.addChunk(null, new Vector3I(11,11,11));
 		// End Testing
 	}
 

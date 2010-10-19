@@ -29,6 +29,10 @@ public class Vector3F {
 	{
 		return new Vector3F(x+v.x, y+v.y, z+v.z);
 	}
+	public Vector3F add(Vector3I v)
+	{
+		return new Vector3F(x+v.x, y+v.y, z+v.z);
+	}
 
 	public Vector3F scale(float factor)
 	{
@@ -39,5 +43,9 @@ public class Vector3F {
 	public Vector3F getUnitVector()
 	{
 		return this.scale(1.0F / getMagnitude());
+	}
+	public String toString()
+	{
+		return "{x="+x+",y="+y+",z="+z+"}";
 	}
 }
