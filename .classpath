@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/lwjgl-2.5/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-2.5/jar/lwjgl_util.jar" sourcepath="/home/julian/javalib/lwjgl-2.5-source"/>
 	<classpathentry kind="lib" path="lib/lwjgl-2.5/jar/lwjgl.jar"/>
 	<classpathentry kind="lib" path="lib/slick/slick-util.jar"/>
 	<classpathentry kind="lib" path="lib/jama.jar"/>
