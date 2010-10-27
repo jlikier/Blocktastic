@@ -1,6 +1,7 @@
 package blocklib.gui.graphics;
 
 import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -50,7 +51,7 @@ public class Window {
 		}
 		
 		cam = new Camera(mode,
-				new Vector3F(0, 0, -5),//position
+				new Vector3F(0, -2, -5),//position
 				new Quaternion(0, 0, 0, 1)//orientation
 				);
 	}
@@ -64,36 +65,33 @@ public class Window {
 			processKeyboard();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
+//			FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,1F,0F,0F}); 
+//			glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
 			
 			cam.transform();
 			
 			glPushMatrix(); {
-				
-				
 				angle = angle + 0.15f;
-				Vector3F vec = Vector3F.I;
-				Vector3F vec2 = new Vector3F();
 				
-				//vec2 = vec.rotate(new Vector3F(1,0,1), angle);
-				//vec = vec.rotate(Vector3F.K, angle);
+				int r = 10;
+				float s = 3.0F;
 				
-				glScalef(.5F, .5F, .5F);
-				glRotatef(30, 1, 1, 0);
-				renderCube();
+				for (int x=-r; x<=r; x++) {
+					for (int y=-r; y<=r; y++) {
+						if (Math.abs(x) == r || Math.abs(y) == r) {
+							glColor3f(1F,1F,1F);
+						} else {
+							glColor3f(x/(2F*-r), y/(2F*-r), 0);
+						}
+						glPushMatrix(); {
+							glTranslatef(x*s, 0, y*s);
+							renderCube();
+						} glPopMatrix();
+						
+					}
+				}
 				
-//				glBegin(GL_LINE_LOOP); {
-//					glVertex3f(0,0,0);
-//					glVertex3f(1,0,0);
-//					glVertex3f(1,1,0);
-//					glVertex3f(1,0,0);
-//					glVertex3f(0,0,0);
-//					
-//					glVertex3f(0,0,1);
-//					glVertex3f(0,1,1);
-//					glVertex3f(0,1,0);
-//					glVertex3f(0,0,0);
-//					
-//				} glEnd();
+				
 				//angle++;
 				//glRotatef(angle, 0f, 1f, 0f);
 				//glRotatef(45f, 0f, 1f, 0f);
@@ -102,6 +100,8 @@ public class Window {
 				//test2.DrawTexturedCube();
 				//renderVBO();
 //				mapRenderer.render();
+				
+			
 			} glPopMatrix();
 		}
 		Display.update();
@@ -147,11 +147,11 @@ public class Window {
 		if (kb.isDown(Keyboard.KEY_S)) cam.position.z -= cam_speed;
 		
 		if (kb.isDown(Keyboard.KEY_A)) {
-			cam.orientation = Quaternion.axisAngle(0, 1, 0, cam_turn).multiply(cam.orientation);
+			cam.orientation = Quaternion.axisAngle(0, 1, 0, cam_turn*5).multiply(cam.orientation);
 		}
 		
 		if (kb.isDown(Keyboard.KEY_D)) { 
-			cam.orientation = Quaternion.axisAngle(0, 1, 0, -cam_turn).multiply(cam.orientation);
+			cam.orientation = Quaternion.axisAngle(0, 1, 0, -cam_turn*5).multiply(cam.orientation);
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
@@ -172,8 +172,8 @@ public class Window {
 				double turnx = cam_turn*(mousex - mode.getWidth()/2);
 				double turny = cam_turn*(mousey - mode.getHeight()/2);
 				
-				cam.orientation = Quaternion.axisAngle(0, 1, 0, turnx).multiply(cam.orientation);
 				cam.orientation = Quaternion.axisAngle(1, 0, 0, turny).multiply(cam.orientation);
+				cam.orientation = Quaternion.axisAngle(0, 1, 0, turnx).multiply(cam.orientation);
 			}
 		}
 	}
@@ -206,10 +206,10 @@ public class Window {
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);
 		//glEnable(GL_POLYGON_SMOOTH);
+		
+		glShadeModel(GL_SMOOTH);
 
-		//glEnable(GL_LIGHT0); 
-		//FloatBuffer position = BufferUtils.createFloatBuffer(4).put(new float[] {0F,0F,5F,0F}); 
-		//glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)position.flip()); 
+		glEnable(GL_LIGHT0); 
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		//glClearColor(1f, 1f, 1f, 0f);
@@ -254,76 +254,41 @@ public class Window {
 		// OK, let's start drawing our planer quads.
 		glBegin(GL_QUADS); {
 
-		// Bottom Face.  Red, 75% opaque, magnified texture
-
-		glNormal3f( 0.0f, -1.0f, 0.0f); // Needed for lighting
-		glColor4d(0.9,0.2,0.2,1); // Basic polygon color
-
+		glNormal3f( 0.0f, -1.0f, 0.0f);
 		glTexCoord2f(0.800f, 0.800f); glVertex3f(-1.0f, -1.0f, -1.0f); 
 		glTexCoord2f(0.200f, 0.800f); glVertex3f( 1.0f, -1.0f, -1.0f);
 		glTexCoord2f(0.200f, 0.200f); glVertex3f( 1.0f, -1.0f,  1.0f);
 		glTexCoord2f(0.800f, 0.200f); glVertex3f(-1.0f, -1.0f,  1.0f);
 
-
-		// Top face; offset.  White, 50% opaque.
-
 		glNormal3f( 0.0f, 1.0f, 0.0f);
-		glColor4d(0.5,0.5,0.5,1);
-
-		glTexCoord2f(0.005f, 1.995f); glVertex3f(-1.0f,  1.3f, -1.0f);
-		glTexCoord2f(0.005f, 0.005f); glVertex3f(-1.0f,  1.3f,  1.0f);
-		glTexCoord2f(1.995f, 0.005f); glVertex3f( 1.0f,  1.3f,  1.0f);
-		glTexCoord2f(1.995f, 1.995f); glVertex3f( 1.0f,  1.3f, -1.0f);
-
-
-		// Far face.  Green, 50% opaque, non-uniform texture cooridinates.
+		glTexCoord2f(0.005f, 1.995f); glVertex3f(-1.0f,  1.0f, -1.0f);
+		glTexCoord2f(0.005f, 0.005f); glVertex3f(-1.0f,  1.0f,  1.0f);
+		glTexCoord2f(1.995f, 0.005f); glVertex3f( 1.0f,  1.0f,  1.0f);
+		glTexCoord2f(1.995f, 1.995f); glVertex3f( 1.0f,  1.0f, -1.0f);
 
 		glNormal3f( 0.0f, 0.0f,-1.0f);
-		glColor4d(0.2,0.9,0.2,.5); 
-
-		glTexCoord2f(0.995f, 0.005f); glVertex3f(-1.0f, -1.0f, -1.3f);
-		glTexCoord2f(2.995f, 2.995f); glVertex3f(-1.0f,  1.0f, -1.3f);
-		glTexCoord2f(0.005f, 0.995f); glVertex3f( 1.0f,  1.0f, -1.3f);
-		glTexCoord2f(0.005f, 0.005f); glVertex3f( 1.0f, -1.0f, -1.3f);
-
-
-		// Right face.  Blue; 25% opaque
+		glTexCoord2f(0.995f, 0.005f); glVertex3f(-1.0f, -1.0f, -1.0f);
+		glTexCoord2f(2.995f, 2.995f); glVertex3f(-1.0f,  1.0f, -1.0f);
+		glTexCoord2f(0.005f, 0.995f); glVertex3f( 1.0f,  1.0f, -1.0f);
+		glTexCoord2f(0.005f, 0.005f); glVertex3f( 1.0f, -1.0f, -1.0f);
 
 		glNormal3f( 1.0f, 0.0f, 0.0f);
-		glColor4d(0.2,0.2,0.9,1);
-
 		glTexCoord2f(0.995f, 0.005f); glVertex3f( 1.0f, -1.0f, -1.0f); 
 		glTexCoord2f(0.995f, 0.995f); glVertex3f( 1.0f,  1.0f, -1.0f);
 		glTexCoord2f(0.005f, 0.995f); glVertex3f( 1.0f,  1.0f,  1.0f);
 		glTexCoord2f(0.005f, 0.005f); glVertex3f( 1.0f, -1.0f,  1.0f);
 
-
-		// Front face; offset.  Multi-colored, 50% opaque.
-
 		glNormal3f( 0.0f, 0.0f, 1.0f); 
-
-		glColor4f( 0.9f, 0.2f, 0.2f, 0.5f);
-		glTexCoord2f( 0.005f, 0.005f); glVertex3f(-1.0f, -1.0f,  1.3f);
-		glColor4f( 0.2f, 0.9f, 0.2f, 0.5f);
-		glTexCoord2f( 0.995f, 0.005f); glVertex3f( 1.0f, -1.0f,  1.3f);
-		glColor4f( 0.2f, 0.2f, 0.9f, 0.5f);
-		glTexCoord2f( 0.995f, 0.995f); glVertex3f( 1.0f,  1.0f,  1.3f); 
-		glColor4f( 0.1f, 0.1f, 0.1f, 0.5f);
-		glTexCoord2f( 0.005f, 0.995f); glVertex3f(-1.0f,  1.0f,  1.3f);
-
-
-		// Left Face; offset.  Yellow, varying levels of opaque.
+		glTexCoord2f( 0.005f, 0.005f); glVertex3f(-1.0f, -1.0f,  1.0f);
+		glTexCoord2f( 0.995f, 0.005f); glVertex3f( 1.0f, -1.0f,  1.0f);
+		glTexCoord2f( 0.995f, 0.995f); glVertex3f( 1.0f,  1.0f,  1.0f); 
+		glTexCoord2f( 0.005f, 0.995f); glVertex3f(-1.0f,  1.0f,  1.0f);
 
 		glNormal3f(-1.0f, 0.0f, 0.0f);  
-
-		glColor4d(0.9,0.9,0.2,0.0);
-		glTexCoord2f(0.005f, 0.005f); glVertex3f(-1.3f, -1.0f, -1.0f); 
-		glColor4d(0.9,0.9,0.2,0.66);
-		glTexCoord2f(0.995f, 0.005f); glVertex3f(-1.3f, -1.0f,  1.0f);
-		glColor4d(0.9,0.9,0.2,1.0);
-		glTexCoord2f(0.995f, 0.995f); glVertex3f(-1.3f,  1.0f,  1.0f);
-		glColor4d(0.9,0.9,0.2,0.33);
-		glTexCoord2f(0.005f, 0.995f); glVertex3f(-1.3f,  1.0f, -1.0f);
+		glTexCoord2f(0.005f, 0.005f); glVertex3f(-1.0f, -1.0f, -1.0f); 
+		glTexCoord2f(0.995f, 0.005f); glVertex3f(-1.0f, -1.0f,  1.0f);
+		glTexCoord2f(0.995f, 0.995f); glVertex3f(-1.0f,  1.0f,  1.0f);
+		glTexCoord2f(0.005f, 0.995f); glVertex3f(-1.0f,  1.0f, -1.0f);
 
 		// All polygons have been drawn.
 		} glEnd();
